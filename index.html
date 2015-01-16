@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Toolbox</h1>
+        <div id="errors" style="display: none;">
+            <div class="alert alert-danger">
+                <button type="button" id="close-error" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span style="font-weight: bold;">Error: </span>
+                <span id="error"></span>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Request</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="url">URL</label>
+                    <input type="text" class="form-control" id="url" name="url" placeholder="Enter URL to test">
+                </div>
+                <button id="test-url" class="btn btn-primary">Test</button>
+            </div>
+        </div>
+        <div id="response" class="panel panel-success" style="display: none;">
+            <div class="panel-heading">
+                <button type="button" id="close-response" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="panel-title">Response</h3>
+            </div>
+            <div id="response-content" class="panel-body">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+(function () {
+    'use strict';
+
+    $(document).ready(function() {
+        $('#test-url').on('click', testURL);
+        $('#close-response').on('click', closeResponse);
+        $('#close-error').on('click', closeError);
+    });
+
+    function testURL() {
+        $.ajax({
+            url: $('#url').val()
+        }).done(function (data, textStatus, jqXHR) {
+            $('#errors').hide();
+
+            var response = '';
+            var contentType = jqXHR.getResponseHeader('Content-Type');
+            if (contentType.indexOf('application/json') > -1) {
+                response = JSON.stringify(data);
+            } else {
+                response = data;
+            }
+            $('#response-content').text(response);
+            $('#response').show();
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            $('#response').hide();
+
+            $('#error').append(errorThrown || 'Internal error');
+            $('#errors').show();
+        });
+    }
+
+    function closeResponse() {
+        $('#response-content').text('');
+        $('#response').hide();
+    }
+
+    function closeError() {
+        $('#error').text('');
+        $('#errors').hide();
+    }
+})();
+</script>
+</html>
