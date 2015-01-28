@@ -14,6 +14,7 @@ $(document).ready(function() {
 function testURL() {
   $.ajax({
     url: $('#url').val(),
+    method: $('#method').val(),
     beforeSend: function (jqXHR) {
       var headers = getHeaders();
       _(headers).forEach(function (header) {
