@@ -21,51 +21,31 @@
         <h3 class="panel-title">Request</h3>
       </div>
       <div class="panel-body">
-        <h2>Headers</h2>
-        <div class="form-group header row">
-          <div class="col-md-5">
-            <input type="text" class="form-control header-name" placeholder="Header name">
-          </div>
-          <div class="col-md-6">
-            <input type="text" class="form-control header-value" placeholder="Header value">
-          </div>
-          <div class="col-md-1 header-action">
-            <span class="glyphicon glyphicon-trash" />
-            <span class="glyphicon glyphicon-plus" />
-          </div>
-        </div>
-        <div class="form-group header row">
-          <div class="col-md-5">
-            <input type="text" class="form-control header-name" placeholder="Header name">
-          </div>
-          <div class="col-md-6">
-            <input type="text" class="form-control header-value" placeholder="Header value">
-          </div>
-          <div class="col-md-1 header-action">
-            <span class="glyphicon glyphicon-trash" />
-            <span class="glyphicon glyphicon-plus" />
-          </div>
-        </div>
-        <div class="form-group header row">
-          <div class="col-md-5">
-            <input type="text" class="form-control header-name" placeholder="Header name">
-          </div>
-          <div class="col-md-6">
-            <input type="text" class="form-control header-value" placeholder="Header value">
-          </div>
-          <div class="col-md-1 header-action">
-            <span class="glyphicon glyphicon-trash" />
-            <span class="glyphicon glyphicon-plus" />
+        <div id="headers" >
+          <h2>Headers</h2>
+          <div class="form-group header row">
+            <div class="col-md-5">
+              <input type="text" class="form-control header-name" placeholder="Header name">
+            </div>
+            <div class="col-md-6">
+              <input type="text" class="form-control header-value" placeholder="Header value">
+            </div>
+            <div class="col-md-1 header-action">
+              <span class="glyphicon glyphicon-trash remove-header"></span>
+              <span class="glyphicon glyphicon-plus add-header"></span>
+            </div>
           </div>
         </div>
 
-        <h2>URL</h2>
-        <div class="row">
-          <div class="form-group col-md-12">
-            <input type="text" class="form-control" id="url" name="url" placeholder="Enter URL to test">
+        <div>
+          <h2>URL</h2>
+          <div class="row">
+            <div class="form-group col-md-12">
+              <input type="text" class="form-control" id="url" name="url" placeholder="Enter URL to test">
+            </div>
           </div>
+          <button id="test-url" class="btn btn-primary">Test</button>
         </div>
-        <button id="test-url" class="btn btn-primary">Test</button>
       </div>
     </div>
 
@@ -76,11 +56,11 @@
       </div>
       <div class="panel-body">
         <h2>Headers</h2>
-        <div id="response-headers">
-        </div>
+        <pre id="response-headers">
+        </pre>
         <h2>Body</h2>
-        <div id="response-body">
-        </div>
+        <pre id="response-body">
+        </pre>
       </form>
     </div>
   </div>
