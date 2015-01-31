@@ -44,8 +44,15 @@ function getHeaders() {
 * Process request success.
 */
 function requestSuccess(data, textStatus, jqXHR) {
-  $('#errors').hide();
+  $('#response').removeClass('panel-danger');
+  $('#response').addClass('panel-success');
+  displayResponse(data, jqXHR);
+}
 
+/**
+* Display response status, headers and body.
+*/
+function displayResponse(data, jqXHR) {
   var response = '';
   var contentType = jqXHR.getResponseHeader('Content-Type');
   if (contentType.indexOf('application/json') > -1) {
@@ -53,6 +60,8 @@ function requestSuccess(data, textStatus, jqXHR) {
   } else {
     response = data;
   }
+
+  $('#response-code').text(jqXHR.status);
   $('#response-headers').text(jqXHR.getAllResponseHeaders());
   $('#response-body').text(response);
   $('#response').show();
@@ -62,10 +71,9 @@ function requestSuccess(data, textStatus, jqXHR) {
 * Process request error.
 */
 function requestError(jqXHR, textStatus, errorThrown) {
-  $('#response').hide();
-
-  $('#error').text(errorThrown || 'Internal error');
-  $('#errors').show();
+  $('#response').removeClass('panel-success');
+  $('#response').addClass('panel-danger');
+  displayResponse(jqXHR.responseText, jqXHR);
 }
 
 /**
