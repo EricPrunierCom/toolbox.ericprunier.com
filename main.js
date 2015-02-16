@@ -55,7 +55,7 @@ function requestSuccess(data, textStatus, jqXHR) {
 function displayResponse(data, jqXHR) {
   var response = '';
   var contentType = jqXHR.getResponseHeader('Content-Type');
-  if (contentType.indexOf('application/json') > -1) {
+  if (contentType && contentType.indexOf('application/json') > -1) {
     response = JSON.stringify(data, undefined, 4);
   } else {
     response = data;
@@ -97,17 +97,17 @@ function closeError() {
 */
 function addHeader() {
   $('#headers').append('<div class="form-group header row">\
-      <div class="col-md-5">\
-        <input type="text" class="form-control header-name" placeholder="Header name">\
-      </div>\
-      <div class="col-md-6">\
-        <input type="text" class="form-control header-value" placeholder="Header value">\
-      </div>\
-      <div class="col-md-1 header-action">\
-        <span class="glyphicon glyphicon-trash remove-header" />\
-        <span class="glyphicon glyphicon-plus add-header" />\
-      </div>\
-    </div>\
+  <div class="col-md-5">\
+  <input type="text" class="form-control header-name" placeholder="Header name">\
+  </div>\
+  <div class="col-md-6">\
+  <input type="text" class="form-control header-value" placeholder="Header value">\
+  </div>\
+  <div class="col-md-1 header-action">\
+  <span class="glyphicon glyphicon-trash remove-header" />\
+  <span class="glyphicon glyphicon-plus add-header" />\
+  </div>\
+  </div>\
   ');
 }
 
