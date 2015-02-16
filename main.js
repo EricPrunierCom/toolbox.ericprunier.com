@@ -52,7 +52,7 @@ function requestSuccess(data, textStatus, jqXHR) {
 /**
 * Display response status, headers and body.
 */
-function displayResponse(data, jqXHR, error) {
+function displayResponse(data, jqXHR) {
   var response = '';
   var contentType = jqXHR.getResponseHeader('Content-Type');
   if (contentType && contentType.indexOf('application/json') > -1) {
@@ -61,7 +61,7 @@ function displayResponse(data, jqXHR, error) {
     response = data;
   }
 
-  $('#response-code').text(jqXHR.status + (error != undefined ? ' ' + error : ''));
+  $('#response-code').text(jqXHR.status + ' ' + jqXHR.statusText);
   $('#response-headers').text(jqXHR.getAllResponseHeaders());
   $('#response-body').text(response);
   $('#response').show();
@@ -94,7 +94,7 @@ function formatJSON(json) {
 function requestError(jqXHR, textStatus, errorThrown) {
   $('#response').removeClass('panel-success');
   $('#response').addClass('panel-danger');
-  displayResponse(jqXHR.responseText, jqXHR, errorThrown || 'Internal error');
+  displayResponse(jqXHR.responseText, jqXHR);
 }
 
 /**
