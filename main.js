@@ -118,16 +118,16 @@ function closeError() {
 */
 function addHeader() {
   $('#headers').append('<div class="form-group header row">\
-  <div class="col-md-5">\
-  <input type="text" class="form-control header-name" placeholder="Header name">\
-  </div>\
-  <div class="col-md-6">\
-  <input type="text" class="form-control header-value" placeholder="Header value">\
-  </div>\
-  <div class="col-md-1 header-action">\
-  <span class="glyphicon glyphicon-trash remove-header" />\
-  <span class="glyphicon glyphicon-plus add-header" />\
-  </div>\
+    <div class="col-md-5">\
+      <input type="text" class="form-control header-name" placeholder="Header name">\
+    </div>\
+    <div class="col-md-6">\
+      <input type="text" class="form-control header-value" placeholder="Header value">\
+    </div>\
+    <div class="col-md-1 header-action">\
+      <span class="glyphicon glyphicon-trash remove-header" />\
+      <span class="glyphicon glyphicon-plus add-header" />\
+    </div>\
   </div>\
   ');
 }
