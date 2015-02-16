@@ -56,7 +56,7 @@ function displayResponse(data, jqXHR) {
   var response = '';
   var contentType = jqXHR.getResponseHeader('Content-Type');
   if (contentType && contentType.indexOf('application/json') > -1) {
-    response = JSON.stringify(data, undefined, 4);
+    response = formatJSON(data);
   } else {
     response = data;
   }
@@ -65,6 +65,27 @@ function displayResponse(data, jqXHR) {
   $('#response-headers').text(jqXHR.getAllResponseHeaders());
   $('#response-body').text(response);
   $('#response').show();
+}
+
+/**
+* Format JSON according to its type.
+*/
+function formatJSON(json) {
+  var response = "";
+
+  switch (typeof json) {
+    case 'object':
+      response = JSON.stringify(json, undefined, 4);
+      break;
+    case 'string':
+      response = JSON.stringify(JSON.parse(json), undefined, 4);
+      break;
+    default:
+      response = json;
+      break;
+  }
+
+  return response;
 }
 
 /**
