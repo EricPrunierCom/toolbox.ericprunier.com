@@ -62,8 +62,8 @@ function displayResponse(data, jqXHR) {
   }
 
   $('#response-code').text(jqXHR.status + ' ' + jqXHR.statusText);
-  $('#response-headers').text(jqXHR.getAllResponseHeaders());
-  $('#response-body').text(response);
+  $('#response-headers').text(jqXHR.getAllResponseHeaders() || '');
+  $('#response-body').text(response || '');
   $('#response').show();
 }
 
