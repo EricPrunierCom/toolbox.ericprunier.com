@@ -13,3 +13,7 @@
 .add-header:hover, .remove-header:hover {
   cursor: pointer;
 }
+
+.hidden {
+  display: none;
+}

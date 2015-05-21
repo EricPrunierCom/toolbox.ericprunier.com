@@ -1,3 +1,5 @@
+'use strict';
+
 var Dispatcher = require('flux').Dispatcher;
 
 var ToolboxDispatcher = new Dispatcher();
@@ -10,4 +12,4 @@ ToolboxDispatcher.handleAction = function(action) {
   });
 }
 
-module.exports = AppDispatcher;
+module.exports = ToolboxDispatcher;

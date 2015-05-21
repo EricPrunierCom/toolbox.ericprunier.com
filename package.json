@@ -14,7 +14,8 @@
     "flux": "^2.0.3",
     "lodash": "^3.8.0",
     "moment": "^2.10.2",
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "reqwest": "^1.1.5"
   },
   "devDependencies": {
     "browserify": "^9.0.8",

@@ -1,35 +1,25 @@
+'use strict';
+
 var ToolboxDispatcher = require('./ToolboxDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var ToolboxConstants = require('./ToolboxConstants');
 var _ = require('lodash');
 
-var requestData = {
-  method: '',
+var request = {
+  method: 'GET',
   url: '',
-  headers: []
+  headers: [{
+    name: '',
+    value: ''
+  }]
 };
-
-function addHeader(name, value) {
-  requestData.headers.push({
-    name: name,
-    value: value
-  });
-}
-
-function removeHeader(index) {
-  requestData.headers.splice(index, 1);
-}
-
-function selectMethod(method) {
-  requestData.method = method;
-}
-
-function sendRequest() {
-  console.log('sending request');
-}
 
 // Request store
 var RequestStore = _.extend({}, EventEmitter.prototype, {
+  getRequest: function() {
+    return request;
+  },
+
   emitChange: function() {
     this.emit('change');
   },
@@ -49,16 +39,22 @@ ToolboxDispatcher.register(function(payload) {
 
   switch(action.actionType) {
     case ToolboxConstants.ADD_HEADER:
-      addHeader(action.name, action.value);
+      addHeader();
       break;
     case ToolboxConstants.REMOVE_HEADER:
-      removeHeader(index);
+      removeHeader(action.index);
       break;
-    case ToolboxConstants.SELECT_METHOD:
-      selectMethod(action.method);
+    case ToolboxConstants.CHANGE_HEADER_NAME:
+      changeHeaderName(action.index, action.name);
       break;
-    case ToolboxConstants.SEND_REQUEST:
-      sendRequest();
+    case ToolboxConstants.CHANGE_HEADER_VALUE:
+      changeHeaderValue(action.index, action.value);
+      break;
+    case ToolboxConstants.CHANGE_URL:
+      changeURL(action.url);
+      break;
+    case ToolboxConstants.CHANGE_METHOD:
+      changeMethod(action.method);
       break;
     default:
       return true;
@@ -69,5 +65,33 @@ ToolboxDispatcher.register(function(payload) {
 
   return true;
 });
+
+function addHeader() {
+  console.log('addHeader');
+  request.headers.push({
+    name: '',
+    value: ''
+  });
+}
+
+function removeHeader(index) {
+  request.headers.splice(index, 1);
+}
+
+function changeHeaderName(index, name) {
+  request.headers[index].name = name;
+}
+
+function changeHeaderValue(index, value) {
+  request.headers[index].value = value;
+}
+
+function changeURL(url) {
+  request.url = url;
+}
+
+function changeMethod(method) {
+  request.method = method;
+}
 
 module.exports = RequestStore;
