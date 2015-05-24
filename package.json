@@ -7,8 +7,8 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "watchify -v -d main.js -o compiled.js",
-    "build": "NODE_ENV=production browserify main.js | uglifyjs > compiled.js"
+    "watch": "watchify -v -d main.js -o bundle.js",
+    "build": "NODE_ENV=production browserify main.js | uglifyjs > bundle.js"
   },
   "dependencies": {
     "flux": "^2.0.3",

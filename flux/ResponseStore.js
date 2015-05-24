@@ -9,8 +9,9 @@ var ToolboxConstants = require('./ToolboxConstants');
 var response = {
   visible: false,
   status: '',
-  headers: [],
-  body: ''
+  headers: '',
+  body: '',
+  error: false
 }
 
 // Request store
@@ -68,14 +69,19 @@ function sendRequest(request) {
     method: request.method,
     headers: headers,
     crossOrigin: true
-  }).then(function (response) {
-    console.log('request', r.request);
-    console.log('status', r.request.status);
-    console.log('statusText', r.request.statusText);
-    console.log('response', JSON.parse(response));
-    console.log('headers', r.request.getAllResponseHeaders());
+  }).then(function (responseBody) {
+    response.status = r.request.status + ' ' + (r.request.statusText || '')
+    response.headers = r.request.getAllResponseHeaders();
+    response.body = typeof responseBody === 'string' ? responseBody : JSON.stringify(responseBody);
+    response.error = false;
+  }).fail(function (err, msg) {
+    response.status = err.status + ' ' + err.statusText;
+    response.headers = err.getAllResponseHeaders();
+    response.body = err.response || 'Internal server error';
+    response.error = true;
   }).always(function () {
     response.visible = true;
+    ResponseStore.emitChange();
   });
 }
 

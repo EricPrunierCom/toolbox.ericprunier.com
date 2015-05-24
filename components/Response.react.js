@@ -28,13 +28,10 @@ var Response = React.createClass({
     var response = this.props.response;
     var headers = _(response.headers);
 
-    // console.log('headers', headers);
-    // headers.map(function (header) {
-    //   console.log('header', header);
-    // });
+    var classString = 'panel' + (response.visible ? '' : ' hidden') + (response.error ? ' panel-danger' : ' panel-success');
 
     return (
-      <div id="response" className={response.visible ? 'panel panel-success' : 'hidden'}>
+      <div id="response" className={classString}>
         <div className="panel-heading">
           <button type="button" id="close-response" className="close" aria-label="Close" onClick={self.hideResponse}><span aria-hidden="true">x</span></button>
           <h3 className="panel-title">Response <span id="response-code">{response.status}</span></h3>
@@ -42,9 +39,7 @@ var Response = React.createClass({
         <div className="panel-body">
           <h2>Headers</h2>
           <pre id="response-headers">
-            {_.map(response.headers, function (header) {
-              return (header);
-            })}
+            {response.headers}
           </pre>
           <h2>Body</h2>
           <pre id="response-body">
