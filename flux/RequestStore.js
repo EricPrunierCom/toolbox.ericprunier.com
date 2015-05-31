@@ -67,7 +67,6 @@ ToolboxDispatcher.register(function(payload) {
 });
 
 function addHeader() {
-  console.log('addHeader');
   request.headers.push({
     name: '',
     value: ''
