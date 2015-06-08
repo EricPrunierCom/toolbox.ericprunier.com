@@ -6,6 +6,12 @@ var RequestStore = require('../flux/RequestStore');
 
 var Request = React.createClass({
 
+  getInitialState: function () {
+    return {
+      request: RequestStore.getRequest(),
+    };
+  },
+
   componentDidMount: function() {
     RequestStore.addChangeListener(this.onChange);
   },
@@ -50,7 +56,7 @@ var Request = React.createClass({
 
   render: function () {
     var self = this;
-    var request = this.props.request;
+    var request = this.state.request;
     var headers = request.headers
 
     return (

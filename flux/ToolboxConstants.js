@@ -10,6 +10,6 @@ module.exports = keyMirror({
   CHANGE_HEADER_VALUE: null,
   CHANGE_URL: null,
   CHANGE_METHOD: null,
-  SEND_REQUEST: null,
+  RESPONSE_RECEIVED: null,
   HIDE_RESPONSE: null,
 });

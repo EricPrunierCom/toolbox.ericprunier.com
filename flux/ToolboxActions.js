@@ -1,5 +1,8 @@
 'use strict';
 
+var _ = require('lodash');
+var Promise = require("bluebird");
+var reqwest = require('reqwest');
 var ToolboxDispatcher = require('./ToolboxDispatcher');
 var ToolboxConstants = require('./ToolboxConstants');
 
@@ -49,10 +52,12 @@ var ToolboxActions = {
   },
 
   sendRequest: function (request) {
-    ToolboxDispatcher.handleAction({
-      actionType: ToolboxConstants.SEND_REQUEST,
-      request: request
-    });
+    sendRequest(request).then(function (response) {
+      ToolboxDispatcher.handleAction({
+        actionType: ToolboxConstants.RESPONSE_RECEIVED,
+        response: response
+      });
+    })
   },
 
   hideResponse: function () {
@@ -62,5 +67,52 @@ var ToolboxActions = {
   }
 
 };
+
+/**
+ * Send request.
+ * @param  {object}  request request
+ * @return {promise} response
+ */
+function sendRequest(request) {
+  var response = new Promise(function (resolve, reject) {
+    var headers = _.reduce(request.headers, addHeader, {});
+
+    var r = reqwest({
+      url: request.url,
+      method: request.method,
+      headers: headers,
+      crossOrigin: true
+    }).then(function (responseBody) {
+      resolve({
+        status: r.request.status + ' ' + (r.request.statusText || ''),
+        headers: r.request.getAllResponseHeaders(),
+        body: typeof responseBody === 'string' ? responseBody : JSON.stringify(responseBody),
+        error: false
+      });
+    }).fail(function (err, msg) {
+      resolve({
+        status: err.status + ' ' + err.statusText,
+        headers: err.getAllResponseHeaders(),
+        body: err.response || 'Internal error',
+        error: true
+      });
+    });
+  });
+
+  return response;
+}
+
+/**
+ * Add header to headers.
+ * @param {Object} headers headers map
+ * @param {object} header  header
+ */
+function addHeader(headers, header) {
+  if (header.name) {
+    headers[header.name] = header.value;
+  }
+
+  return headers;
+}
 
 module.exports = ToolboxActions;

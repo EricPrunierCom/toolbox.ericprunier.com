@@ -7,12 +7,20 @@ var ToolboxActions = require('../flux/ToolboxActions');
 
 var Response = React.createClass({
 
+  getInitialState: function () {
+    return {
+      response: ResponseStore.getResponse()
+    };
+  },
+
   componentDidMount: function () {
     ResponseStore.addChangeListener(this.onChange);
   },
 
   onChange: function () {
-    this.setState(ResponseStore.getResponse());
+    this.setState({
+      response: ResponseStore.getResponse()
+    });
   },
 
   componentWillUnmount: function () {
@@ -25,7 +33,7 @@ var Response = React.createClass({
 
   render: function () {
     var self = this;
-    var response = this.props.response;
+    var response = this.state.response;
     var headers = _(response.headers);
 
     var classString = 'panel' + (response.visible ? '' : ' hidden') + (response.error ? ' panel-danger' : ' panel-success');

@@ -7,18 +7,12 @@ var RequestStore = require('../flux/RequestStore');
 var ResponseStore = require('../flux/ResponseStore');
 
 var App = React.createClass({
-  getInitialState: function () {
-    return {
-      request: RequestStore.getRequest(),
-      response: ResponseStore.getResponse()
-    };
-  },
   render: function () {
     return (
       <div>
         <h1>API Toolbox</h1>
-        <Request request={this.state.request} />
-        <Response response={this.state.response} />
+        <Request />
+        <Response />
       </div>
     );
   }

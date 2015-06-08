@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('lodash');
-var reqwest = require('reqwest');
 var ToolboxDispatcher = require('./ToolboxDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var ToolboxConstants = require('./ToolboxConstants');
@@ -38,11 +37,12 @@ ToolboxDispatcher.register(function(payload) {
   var action = payload.action;
 
   switch(action.actionType) {
-    case ToolboxConstants.SEND_REQUEST:
-      sendRequest(action.request);
+    case ToolboxConstants.RESPONSE_RECEIVED:
+      response = action.response;
+      response.visible = true;
       break;
     case ToolboxConstants.HIDE_RESPONSE:
-      hideResponse();
+      response.visible = false;
       break;
     default:
       return true;
@@ -53,40 +53,5 @@ ToolboxDispatcher.register(function(payload) {
 
   return true;
 });
-
-function sendRequest(request) {
-  var headers = _.reduce(
-    request.headers,
-    function (acc, header) {
-      if (header.name) {
-        acc[header.name] = header.value;
-      }
-      return acc;
-    }, {});
-
-  var r = reqwest({
-    url: request.url,
-    method: request.method,
-    headers: headers,
-    crossOrigin: true
-  }).then(function (responseBody) {
-    response.status = r.request.status + ' ' + (r.request.statusText || '')
-    response.headers = r.request.getAllResponseHeaders();
-    response.body = typeof responseBody === 'string' ? responseBody : JSON.stringify(responseBody);
-    response.error = false;
-  }).fail(function (err, msg) {
-    response.status = err.status + ' ' + err.statusText;
-    response.headers = err.getAllResponseHeaders();
-    response.body = err.response || 'Internal server error';
-    response.error = true;
-  }).always(function () {
-    response.visible = true;
-    ResponseStore.emitChange();
-  });
-}
-
-function hideResponse() {
-  response.visible = false;
-}
 
 module.exports = ResponseStore;

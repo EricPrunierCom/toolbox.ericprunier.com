@@ -11,9 +11,9 @@
     "build": "NODE_ENV=production browserify main.js | uglifyjs > bundle.js"
   },
   "dependencies": {
+    "bluebird": "^2.9.27",
     "flux": "^2.0.3",
     "lodash": "^3.8.0",
-    "moment": "^2.10.2",
     "react": "^0.13.3",
     "reqwest": "^1.1.5"
   },
